@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public enum Role {
     USER(Set.of(Permission.DEVELOPERS_READ)),
     ADMIN(Set.of(Permission.DEVELOPERS_READ, Permission.DEVELOPERS_WRITE));
-
+// user add write admin add edir and delete
     private final Set<Permission> permissionSet;
 
     Role(Set<Permission> permissionSet) {

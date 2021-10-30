@@ -13,10 +13,13 @@
 </div>
 <h1>Create new User</h1>
 <p th:text="${message}"></p>
-<form th:action="@{/auth/registration}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+<form th:action="@{/registration}" method="post" th:object="${user}">
+    <label for="email">Enter Email: </label>
+    <input type="text" th:field="*{email}" id="email"/>
+    <br/>
+    <label for="password">Enter Password: </label>
+    <input type="text" th:field="*{password}" id="password"/>
+    <input type="submit" value="Create!"/>
 </form>
 </body>
 </html>
