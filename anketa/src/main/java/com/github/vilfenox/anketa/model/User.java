@@ -1,6 +1,7 @@
 package com.github.vilfenox.anketa.model;
 
 import lombok.Data;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
 
