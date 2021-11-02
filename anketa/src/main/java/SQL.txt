@@ -1,0 +1,29 @@
+create table users
+(
+	id bigserial
+		constraint users_pk
+			primary key,
+	email varchar(255) not null,
+	first_name varchar(50) not null,
+	last_name varchar(50) not null,
+	password varchar(250) not null,
+	role varchar(10) default 'USER' not null,
+	status varchar(10) default 'ACTIVE' not null
+);
+
+create table questionnaires
+(
+	id bigserial
+		constraint questionnaires_pk
+			primary key,
+	name_questionnaire int not null
+);
+
+create table questions
+(
+	id bigserial
+		constraint questions_pk
+			primary key,
+	value varchar not null,
+	choice_type varchar not null
+);

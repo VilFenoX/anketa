@@ -1,7 +1,7 @@
 package com.github.vilfenox.anketa.security;
 
 import com.github.vilfenox.anketa.model.Status;
-import com.github.vilfenox.anketa.model.User;
+import com.github.vilfenox.anketa.Entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
