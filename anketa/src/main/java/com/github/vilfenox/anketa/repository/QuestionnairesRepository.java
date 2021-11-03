@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface QuestionnairesRepository extends CrudRepository<Questionnaires, Long> {
 
     Iterable<Questionnaires> findAll();
+    Optional<Questionnaires> findByNameQuestionnaire(String nameQuestionnaire);
     //Optional<Questionnaires> findById();
 }

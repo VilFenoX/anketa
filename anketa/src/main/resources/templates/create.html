@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Create New Questionnaire</title>
+</head>
+<body>
+<div th:if="${param.logout}">
+    You have been logged out.
+</div>
+<h1>Create New Questionnaire</h1>
+<p th:text="${message}"></p>
+<form th:action="@{/api/create}" method="post" th:object="${questionnaire}">
+    <label for="name">Enter Value: </label>
+    <input type="text" th:field="*{nameQuestionnaire}" id="name"/>
+    <br/>
+    <input type="submit" value="Create!"/>
+</form>
+</body>
+</html>

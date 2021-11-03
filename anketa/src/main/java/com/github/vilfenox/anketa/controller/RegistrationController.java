@@ -34,7 +34,6 @@ public class RegistrationController {
             model.addAttribute("message", "User exists!");
             return "/registration";
         }
-        System.out.println(user.getPassword());
         user.setPassword(new BCryptPasswordEncoder(12).encode(user.getPassword()));
         user.setRole(Role.USER);
         user.setStatus(Status.ACTIVE);
