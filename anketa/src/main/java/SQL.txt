@@ -16,7 +16,7 @@ create table questionnaires
 	id bigserial
 		constraint questionnaires_pk
 			primary key,
-	name_questionnaire int not null
+	name_questionnaire varchar not null
 );
 
 create table questions
@@ -26,4 +26,5 @@ create table questions
 			primary key,
 	value varchar not null,
 	choice_type varchar not null
+	questionnaire_id bigint not null;
 );

@@ -1,7 +1,5 @@
 package com.github.vilfenox.anketa.Entity;
 
-
-import com.github.vilfenox.anketa.model.Choice;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
