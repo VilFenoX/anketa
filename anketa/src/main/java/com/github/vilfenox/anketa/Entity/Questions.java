@@ -16,8 +16,8 @@ public class Questions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "questionnaire_id")
-    private Long questionnaireId;
+   // @Column(name = "questionnaire_id")
+   // private Long questionnaireId;
 
     @Column(name = "value")
     private String valueQuestion;
@@ -26,7 +26,7 @@ public class Questions {
     private Choice choiceType;
 
     @ManyToOne(fetch = FetchType.EAGER)
-   // @JoinColumn (name="questionnaire_id")
+    @JoinColumn (name="questionnaire_id")
     private Questionnaires questionnaire;
 
 }

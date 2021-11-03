@@ -2,10 +2,12 @@ package com.github.vilfenox.anketa.repository;
 
 import com.github.vilfenox.anketa.Entity.Questionnaires;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface QuestionnairesRepository extends JpaRepository<Questionnaires, Long> {
+public interface QuestionnairesRepository extends CrudRepository<Questionnaires, Long> {
 
-    Optional<Questionnaires> findAllBy();
+    Iterable<Questionnaires> findAll();
+    //Optional<Questionnaires> findById();
 }
