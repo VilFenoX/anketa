@@ -5,10 +5,17 @@
     <title>Questionnaires</title>
 </head>
 <body>
+<div>
+    <p th:text="${questionnaire.getNameQuestionnaire()}">questionnaire</p>
+</div>
 
 <div th:each="question : ${questions}">
     <a th:href="@{/api/question/{id}(id=${question.getId()})}" th:text="${question.getValueQuestion()}">question</a>
 </div>
+
+<form action="/api/create_question" method="GET">
+    <button type="submit">Create New Question</button>
+</form>
 
 </body>
 </html>

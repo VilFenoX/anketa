@@ -54,9 +54,22 @@ public class MainController {
     @GetMapping("/questionnaire/{id}")
   //  @PreAuthorize("hasAuthority('developers:read')")
     public String getById(@PathVariable Long id, Model model){
+       // System.out.println(questionnairesRepository.findAllById(id));
         model.addAttribute("questions",questionsRepository.findAllByQuestionnaire_Id(id));
-        model.addAttribute("questionnaire", questionnairesRepository.findById(id));
+        model.addAttribute("questionnaire", questionnairesRepository.findAllById(id));
         return "/questions";
     }
+
+    /*@PostMapping("/create_question")
+    public String addQuestion(@ModelAttribute("questionnaire") Questionnaires questionnaire, Model model){
+        Optional<Questionnaires> questionnairesFromBD = questionnairesRepository.findByNameQuestionnaire(questionnaire.getNameQuestionnaire());
+        if (questionnairesFromBD.isPresent()) {
+            model.addAttribute("message", "Questionnaire exists!");
+            return "create_questionnaire";
+        }
+        questionnaire.setNameQuestionnaire(questionnaire.getNameQuestionnaire());
+        questionnairesRepository.save(questionnaire);
+        return "create_questionnaire";
+    }*/
 
 }
