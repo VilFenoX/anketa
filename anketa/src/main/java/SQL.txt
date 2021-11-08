@@ -25,8 +25,8 @@ create table questions
 		constraint questions_pk
 			primary key,
 	value varchar not null,
-	choice_type varchar not null
-	questionnaire_id bigint not null;
+	choice_type varchar not null,
+	questionnaire_id bigint not null,
 	constraint questions_questionnaires_id_fk
-    		foreign key (questionnaire_id) references questionnaires(id);
+    		foreign key (questionnaire_id) references questionnaires(id)
 );

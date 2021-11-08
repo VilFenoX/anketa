@@ -47,9 +47,10 @@ public class MainController {
             model.addAttribute("message", "Questionnaire exists!");
             return "create_questionnaire";
         }
+        model.addAttribute("questionnaires",questionnairesRepository.findAll());
         questionnaire.setNameQuestionnaire(questionnaire.getNameQuestionnaire());
         questionnairesRepository.save(questionnaire);
-        return "create_questionnaire";
+        return "/questionnaires";
     }
     @GetMapping("/questionnaire/{id}")
   //  @PreAuthorize("hasAuthority('developers:read')")

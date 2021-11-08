@@ -10,5 +10,13 @@
     <a th:href="@{/api/questionnaire/{id}(id=${questionnaire.getId()})}" th:text="${questionnaire.getNameQuestionnaire()}">questionnaire</a>
 </div>
 
+<form action="/api/create" method="GET">
+    <button type="submit">Create New Questionnaire</button>
+</form>
+
+<form action="/api" method="GET">
+    <button type="submit">Update List</button>
+</form>
+
 </body>
 </html>
