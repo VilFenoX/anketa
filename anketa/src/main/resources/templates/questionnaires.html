@@ -5,7 +5,6 @@
     <title>Questionnaires</title>
 </head>
 <body>
-
 <div th:each="questionnaire : ${questionnaires}">
     <a th:href="@{/api/questionnaire/{id}(id=${questionnaire.getId()})}" th:text="${questionnaire.getNameQuestionnaire()}">questionnaire</a>
 </div>
@@ -17,6 +16,5 @@
 <form action="/api" method="GET">
     <button type="submit">Update List</button>
 </form>
-
 </body>
 </html>

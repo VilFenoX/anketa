@@ -2,6 +2,7 @@ package com.github.vilfenox.anketa.controller;
 
 
 import com.github.vilfenox.anketa.Entity.Questionnaires;
+import com.github.vilfenox.anketa.Entity.Questions;
 import com.github.vilfenox.anketa.repository.QuestionnairesRepository;
 import com.github.vilfenox.anketa.repository.QuestionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,25 +53,45 @@ public class MainController {
         questionnairesRepository.save(questionnaire);
         return "/questionnaires";
     }
+
+
     @GetMapping("/questionnaire/{id}")
   //  @PreAuthorize("hasAuthority('developers:read')")
-    public String getById(@PathVariable Long id, Model model){
-       // System.out.println(questionnairesRepository.findAllById(id));
-        model.addAttribute("questions",questionsRepository.findAllByQuestionnaire_Id(id));
-        model.addAttribute("questionnaire", questionnairesRepository.findAllById(id));
+    public String listQuestion(@PathVariable Long id, Model model){
+       // model.addAttribute("question", new Questions());
+        Questionnaires questionnaire = questionnairesRepository.findById(id).get();
+        model.addAttribute("questionnaire", questionnaire);
+        model.addAttribute("questions", questionsRepository.findAllByQuestionnaire_Id(id));
         return "/questions";
     }
 
-    /*@PostMapping("/create_question")
-    public String addQuestion(@ModelAttribute("questionnaire") Questionnaires questionnaire, Model model){
-        Optional<Questionnaires> questionnairesFromBD = questionnairesRepository.findByNameQuestionnaire(questionnaire.getNameQuestionnaire());
-        if (questionnairesFromBD.isPresent()) {
-            model.addAttribute("message", "Questionnaire exists!");
-            return "create_questionnaire";
+    @GetMapping("/questionnaire/{id}/create_question")
+    public String createQuestion(@PathVariable Long id, Model model){
+        model.addAttribute("question", new Questions());
+        Questionnaires questionnaire = questionnairesRepository.findById(id).get();
+        model.addAttribute("questionnaire", questionnaire);
+        model.addAttribute("questions", questionsRepository.findAllByQuestionnaire_Id(id));
+        return "/create_question";
+    }
+
+
+    @PostMapping("/create_question")
+    public String addQuestion(@ModelAttribute("question") Questions question,
+                              @ModelAttribute("questionnaire") Questionnaires questionnaire,
+                              Model model){
+        Questionnaires questionnaires = questionnaire;
+       // System.out.println(questionnaires);
+        //Optional<Questions> questionsFromBD = questionsRepository.findByValueQuestion(question.getValueQuestion());
+        Optional<Questions> questionsFromBD = questionsRepository.findByValueQuestionAndAndQuestionnaire_Id(question.getValueQuestion(), questionnaire.getId());
+        if (questionsFromBD.isPresent()) {
+            model.addAttribute("message", "Question exists!");
+            return "create_question";
         }
-        questionnaire.setNameQuestionnaire(questionnaire.getNameQuestionnaire());
-        questionnairesRepository.save(questionnaire);
-        return "create_questionnaire";
-    }*/
+       // model.addAttribute("questionnaire", questionnaire);
+        question.setValueQuestion(question.getValueQuestion());
+        questionsRepository.save(question);
+        model.addAttribute("questions",questionsRepository.findAllByQuestionnaire_Id(questionnaire.getId()));
+        return "questions";
+    }
 
 }
