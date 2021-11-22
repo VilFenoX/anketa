@@ -5,6 +5,7 @@ import com.github.vilfenox.anketa.Entity.Questionnaires;
 import com.github.vilfenox.anketa.Entity.Questions;
 import com.github.vilfenox.anketa.repository.QuestionnairesRepository;
 import com.github.vilfenox.anketa.repository.QuestionsRepository;
+import com.github.vilfenox.anketa.repository.VariantsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,17 +17,12 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class MainController {
 
-
-/*    private List<Developer> DEVELOPERS = Stream.of(
-            new Developer(1L, "Ivan","Ivanov"),
-            new Developer(2L, "Sergey","Sergeev"),
-            new Developer(2L, "Petr","Petrov")
-    ).collect(Collectors.toList());*/
-
     @Autowired
     private QuestionnairesRepository questionnairesRepository;
     @Autowired
     private QuestionsRepository questionsRepository;
+    @Autowired
+    private VariantsRepository variantsRepository;
 
     @GetMapping
     public String getAllQuestionnaires(Model model){
@@ -54,7 +50,6 @@ public class MainController {
         return "/questionnaires";
     }
 
-
     @GetMapping("/questionnaire/{id}")
   //  @PreAuthorize("hasAuthority('developers:read')")
     public String listQuestion(@PathVariable Long id, Model model){
@@ -73,12 +68,11 @@ public class MainController {
         return "/create_question";
     }
 
-
     @PostMapping("/create_question")
     public String addQuestion(@ModelAttribute("question") Questions question,
                               @ModelAttribute("questionnaire") Questionnaires questionnaire,
                               Model model){
-        Questionnaires questionnaires = questionnaire;
+        //Questionnaires questionnaires = questionnaire;
         Optional<Questions> questionsFromBD = questionsRepository.findByValueQuestionAndAndQuestionnaire_Id(question.getValueQuestion(), questionnaire.getId());
         if (questionsFromBD.isPresent()) {
             model.addAttribute("message", "Question exists!");
@@ -88,6 +82,15 @@ public class MainController {
         questionsRepository.save(question);
         model.addAttribute("questions",questionsRepository.findAllByQuestionnaire_Id(questionnaire.getId()));
         return "questions";
+    }
+
+    @GetMapping("/question/{id}")
+    //  @PreAuthorize("hasAuthority('developers:read')")
+    public String listVariant(@PathVariable Long id, Model model){
+        Questions question = questionsRepository.findById(id).get();
+        model.addAttribute("question", question);
+        model.addAttribute("variants", variantsRepository.findByQuestion_Id(id));
+        return "/variants";
     }
 
 }
