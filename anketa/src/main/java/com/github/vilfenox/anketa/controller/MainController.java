@@ -58,7 +58,6 @@ public class MainController {
     @GetMapping("/questionnaire/{id}")
   //  @PreAuthorize("hasAuthority('developers:read')")
     public String listQuestion(@PathVariable Long id, Model model){
-       // model.addAttribute("question", new Questions());
         Questionnaires questionnaire = questionnairesRepository.findById(id).get();
         model.addAttribute("questionnaire", questionnaire);
         model.addAttribute("questions", questionsRepository.findAllByQuestionnaire_Id(id));
@@ -80,14 +79,11 @@ public class MainController {
                               @ModelAttribute("questionnaire") Questionnaires questionnaire,
                               Model model){
         Questionnaires questionnaires = questionnaire;
-       // System.out.println(questionnaires);
-        //Optional<Questions> questionsFromBD = questionsRepository.findByValueQuestion(question.getValueQuestion());
         Optional<Questions> questionsFromBD = questionsRepository.findByValueQuestionAndAndQuestionnaire_Id(question.getValueQuestion(), questionnaire.getId());
         if (questionsFromBD.isPresent()) {
             model.addAttribute("message", "Question exists!");
             return "create_question";
         }
-       // model.addAttribute("questionnaire", questionnaire);
         question.setValueQuestion(question.getValueQuestion());
         questionsRepository.save(question);
         model.addAttribute("questions",questionsRepository.findAllByQuestionnaire_Id(questionnaire.getId()));
