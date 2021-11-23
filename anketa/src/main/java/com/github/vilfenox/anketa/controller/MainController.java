@@ -3,6 +3,7 @@ package com.github.vilfenox.anketa.controller;
 
 import com.github.vilfenox.anketa.Entity.Questionnaires;
 import com.github.vilfenox.anketa.Entity.Questions;
+import com.github.vilfenox.anketa.Entity.Variants;
 import com.github.vilfenox.anketa.repository.QuestionnairesRepository;
 import com.github.vilfenox.anketa.repository.QuestionsRepository;
 import com.github.vilfenox.anketa.repository.VariantsRepository;
@@ -73,7 +74,7 @@ public class MainController {
                               @ModelAttribute("questionnaire") Questionnaires questionnaire,
                               Model model){
         //Questionnaires questionnaires = questionnaire;
-        Optional<Questions> questionsFromBD = questionsRepository.findByValueQuestionAndAndQuestionnaire_Id(question.getValueQuestion(), questionnaire.getId());
+        Optional<Questions> questionsFromBD = questionsRepository.findByValueQuestionAndQuestionnaire_Id(question.getValueQuestion(), questionnaire.getId());
         if (questionsFromBD.isPresent()) {
             model.addAttribute("message", "Question exists!");
             return "create_question";
@@ -91,6 +92,30 @@ public class MainController {
         model.addAttribute("question", question);
         model.addAttribute("variants", variantsRepository.findByQuestion_Id(id));
         return "/variants";
+    }
+
+    @GetMapping("/question/{id}/create_variant")
+    public String createVariant(@PathVariable Long id, Model model){
+        model.addAttribute("variant", new Variants());
+        Questions question = questionsRepository.findById(id).get();
+        model.addAttribute("question", question);
+        model.addAttribute("variants", variantsRepository.findAllByQuestion_Id(id));
+        return "/create_variant";
+    }
+
+    @PostMapping("/create_variant")
+    public String addVariant(@ModelAttribute("variant") Variants variant,
+                              @ModelAttribute("question") Questions question,
+                              Model model){
+        Optional<Variants> variantsFromBD = variantsRepository.findByValueVariantAndQuestion_Id(variant.getValueVariant(), question.getId());
+        if (variantsFromBD.isPresent()) {
+            model.addAttribute("message", "Variant exists!");
+            return "create_variant";
+        }
+        variant.setValueVariant(variant.getValueVariant());
+        variantsRepository.save(variant);
+        model.addAttribute("variants",variantsRepository.findAllByQuestion_Id(question.getId()));
+        return "variants";
     }
 
 }
