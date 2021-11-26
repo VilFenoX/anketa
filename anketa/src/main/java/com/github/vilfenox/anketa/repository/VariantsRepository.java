@@ -11,6 +11,6 @@ public interface VariantsRepository extends CrudRepository<Variants, Long> {
     Iterable<Variants> findAll();
     Iterable<Variants> findByQuestion_Id(Long id);
     Iterable<Variants> findAllByQuestion_Id(Long id);
-    //Optional<Variants> findByValueQuestion(String valueQuestion);
+    Optional<Variants> findByQ;
     Optional<Variants> findByValueVariantAndQuestion_Id(String valueQuestion, Long id);
 }
