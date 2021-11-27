@@ -37,35 +37,9 @@ public class UserController {
     public String listQuestion(@PathVariable Long id, Model model){
         Questionnaires questionnaire = questionnairesRepository.findById(id).get();
         model.addAttribute("questionnaire", questionnaire);
-        model.addAttribute("questions", questionsRepository.findAllByQuestionnaire_Id(id));
-        model.addAttribute("variants", variantsRepository.;
-        return "/questions";
+        Iterable<Questions> questionsFromBD = questionsRepository.findAllByQuestionnaire_Id(id);
+        model.addAttribute("questions", questionsFromBD);
+        return "/user_variants";
     }
-
-    @GetMapping("/questionnaire/{id}/create_question")
-    public String createQuestion(@PathVariable Long id, Model model){
-        model.addAttribute("question", new Questions());
-        Questionnaires questionnaire = questionnairesRepository.findById(id).get();
-        model.addAttribute("questionnaire", questionnaire);
-        model.addAttribute("questions", questionsRepository.findAllByQuestionnaire_Id(id));
-        return "/create_question";
-    }
-
-    @PostMapping("/create_question")
-    public String addQuestion(@ModelAttribute("question") Questions question,
-                              @ModelAttribute("questionnaire") Questionnaires questionnaire,
-                              Model model){
-        //Questionnaires questionnaires = questionnaire;
-        Optional<Questions> questionsFromBD = questionsRepository.findByValueQuestionAndQuestionnaire_Id(question.getValueQuestion(), questionnaire.getId());
-        if (questionsFromBD.isPresent()) {
-            model.addAttribute("message", "Question exists!");
-            return "create_question";
-        }
-        question.setValueQuestion(question.getValueQuestion());
-        questionsRepository.save(question);
-        model.addAttribute("questions",questionsRepository.findAllByQuestionnaire_Id(questionnaire.getId()));
-        return "questions";
-    }
-
 
 }

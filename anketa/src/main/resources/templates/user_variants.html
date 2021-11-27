@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Variants</title>
+</head>
+<body>
+<div>
+    <h2>Variants for Questionnaire : </h2>
+    <p th:text="${questionnaire.getNameQuestionnaire()}">questionnaire</p>
+</div>
+
+<div th:each="question : ${questions}">
+    <a  th:text="${question.getValueQuestion()}">question</a>
+    <div th:each="variant : ${question.getVariants()}">
+        <a th:text="${variant.getValueVariant()}">variant</a>
+    </div>
+</div>
+
+</body>
+</html>
