@@ -11,11 +11,15 @@
 </div>
 
 <div th:each="variant : ${variants}">
-    <a th:href="@{/api/variant/{id}(id=${variant.getId()})}" th:text="${variant.getValueVariant()}">question</a>
+    <a th:text="${variant.getValueVariant()}">question</a>
 </div>
 
 <form   th:action="@{/api/question/{id}/create_variant(id=${question.getId()})}" method="GET">
     <button type="submit">Create New Variant</button>
+</form>
+
+<form action="/api" method="GET">
+    <button type="submit">Complete</button>
 </form>
 
 </body>

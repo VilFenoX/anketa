@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -20,4 +22,7 @@ public class Variants {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name="question_id")
     private Questions question;
+
+    @ManyToMany(mappedBy = "variants")
+    private Set<User> users = new HashSet<>();
 }

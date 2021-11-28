@@ -5,6 +5,8 @@ import com.github.vilfenox.anketa.model.Status;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -28,4 +30,11 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status")
     private Status status;
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "user_variant",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "variant_id") }
+    )
+    private Set<Variants> variants = new HashSet<>();
 }
