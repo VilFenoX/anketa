@@ -10,12 +10,21 @@
     <p th:text="${questionnaire.getNameQuestionnaire()}">questionnaire</p>
 </div>
 
+<form action="#" th:action="@{/seedstartermng}" method="post">
+
 <div th:each="question : ${questions}">
     <a  th:text="${question.getValueQuestion()}">question</a>
-    <div th:each="variant : ${question.getVariants()}">
-        <a th:text="${variant.getValueVariant()}">variant</a>
-    </div>
+
+    <li th:each="variant : ${question.getVariants()}">
+
+    <input th:type="${question.choiceType}"  name="myRadios" th:field="${user}" th:value="${variant.id}" />
+            <label th:for="${question.getValueQuestion()}" name="myRadios" th:text="${variant.getValueVariant()}">variant </label>
+
+    </li>
+
 </div>
+   <button type="submit">Complete</button>
+</form>
 
 </body>
 </html>
