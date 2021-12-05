@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -23,6 +24,6 @@ public class Variants {
     @JoinColumn (name="question_id")
     private Questions question;
 
-    @ManyToMany(mappedBy = "variants")
-    private Set<User> users = new HashSet<>();
+    @OneToMany(mappedBy = "variant", fetch = FetchType.EAGER)
+    private List<Answer> answers;
 }

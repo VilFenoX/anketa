@@ -1,13 +1,8 @@
 package com.github.vilfenox.anketa.controller;
 
 
-import com.github.vilfenox.anketa.Entity.Questionnaires;
-import com.github.vilfenox.anketa.Entity.Questions;
-import com.github.vilfenox.anketa.Entity.Variants;
-import com.github.vilfenox.anketa.repository.QuestionnairesRepository;
-import com.github.vilfenox.anketa.repository.QuestionsRepository;
-import com.github.vilfenox.anketa.repository.UserRepository;
-import com.github.vilfenox.anketa.repository.VariantsRepository;
+import com.github.vilfenox.anketa.Entity.*;
+import com.github.vilfenox.anketa.repository.*;
 import com.github.vilfenox.anketa.security.SecurityUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -32,6 +27,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+
     @GetMapping
     public String getAllQuestionnaires(Model model){
         model.addAttribute("questionnaires",questionnairesRepository.findAll());
@@ -50,11 +46,17 @@ public class UserController {
         Questionnaires questionnaire = questionnairesRepository.findById(id).get();
         model.addAttribute("questionnaire", questionnaire);
 
-        model.addAttribute("user", userRepository.findByEmail(currentPrincipalName));
+        model.addAttribute("user", userRepository.findByEmail(currentPrincipalName).get());
+        model.addAttribute("answer", new Answer());
 
         Iterable<Questions> questionsFromBD = questionsRepository.findAllByQuestionnaire_Id(id);
         model.addAttribute("questions", questionsFromBD);
         return "/user_variants";
     }
 
+    @PostMapping("/save_answer")
+    public String saveAnswer(@ModelAttribute("user") User user, Model model){
+        System.out.println(user);
+        return "/success";
+    }
 }

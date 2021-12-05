@@ -49,3 +49,10 @@ CREATE TABLE user_variant
     CONSTRAINT "FK_variant_id" FOREIGN KEY ("variant_id")
         REFERENCES "variants" ("id")
 );
+alter table answers rename to answers;
+alter table answers
+    add id bigserial
+     constraint answers_pk
+        primary key;
+alter table answers
+    drop column user_id;

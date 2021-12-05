@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Variants</title>
+
 </head>
 <body>
 <div>
@@ -10,18 +11,20 @@
     <p th:text="${questionnaire.getNameQuestionnaire()}">questionnaire</p>
 </div>
 
-<form action="#" th:action="@{/seedstartermng}" method="post">
+<form name="myForm" action="#" th:action="@{/user/save_answer}" method="post">
 
 <div th:each="question : ${questions}">
-    <a  th:text="${question.getValueQuestion()}">question</a>
+
+    <span th:text="${question.getValueQuestion()}" th:name="${question.getValueQuestion()}">question</span>
+    <ul>
 
     <li th:each="variant : ${question.getVariants()}">
 
-    <input th:type="${question.choiceType}"  name="myRadios" th:field="${user}" th:value="${variant.id}" />
-            <label th:for="${question.getValueQuestion()}" name="myRadios" th:text="${variant.getValueVariant()}">variant </label>
-
+        </script>
+            <input th:type="${question.choiceType}" th:id="${question.id}" th:field="${variant.answers}" th:value="${answer.id}">
+            <label  th:for="${question.id}" th:text="${variant.getValueVariant()}">variant </label>
     </li>
-
+    </ul>
 </div>
    <button type="submit">Complete</button>
 </form>
