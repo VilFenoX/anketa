@@ -26,4 +26,7 @@ public class Variants {
 
     @OneToMany(mappedBy = "variant", fetch = FetchType.EAGER)
     private List<Answer> answers;
+
+    @ManyToMany(mappedBy = "variants")
+    private Set<User> users = new HashSet<>();
 }

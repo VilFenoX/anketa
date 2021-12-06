@@ -20,9 +20,9 @@
 
     <li th:each="variant : ${question.getVariants()}">
 
-        </script>
-            <input th:type="${question.choiceType}" th:id="${question.id}" th:field="${variant.answers}" th:value="${answer.id}">
-            <label  th:for="${question.id}" th:text="${variant.getValueVariant()}">variant </label>
+        <input th:type="${question.choiceType}"  name="myRadios" th:field="${user}" th:value="${variant.id}" />
+        <label th:for="${question.getValueQuestion()}" name="myRadios" th:text="${variant.getValueVariant()}">variant </label>
+
     </li>
     </ul>
 </div>

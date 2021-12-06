@@ -47,7 +47,6 @@ public class UserController {
         model.addAttribute("questionnaire", questionnaire);
 
         model.addAttribute("user", userRepository.findByEmail(currentPrincipalName).get());
-        model.addAttribute("answer", new Answer());
 
         Iterable<Questions> questionsFromBD = questionsRepository.findAllByQuestionnaire_Id(id);
         model.addAttribute("questions", questionsFromBD);

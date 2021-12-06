@@ -31,4 +31,12 @@ public class User {
     @Column(name = "status")
     private Status status;
 
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "user_variant",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "variant_id") }
+    )
+    private Set<Variants> variants = new HashSet<>();
 }
+
