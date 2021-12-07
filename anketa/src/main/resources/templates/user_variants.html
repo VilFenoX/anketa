@@ -13,19 +13,17 @@
 
 <form name="myForm" action="#" th:action="@{/user/save_answer}" method="post">
 
-<div th:each="question : ${questions}">
 
     <span th:text="${question.getValueQuestion()}" th:name="${question.getValueQuestion()}">question</span>
     <ul>
 
     <li th:each="variant : ${question.getVariants()}">
 
-        <input th:type="${question.choiceType}"  name="myRadios" th:field="${user}" th:value="${variant.id}" />
-        <label th:for="${question.getValueQuestion()}" name="myRadios" th:text="${variant.getValueVariant()}">variant </label>
+        <input th:type="${question.choiceType}"  name="myRadios" th:field="${answer.variant}" th:value="${variant.id}" />
+        <label th:for="${question.getValueQuestion()}" name="myRadios" th:text="${variant.getValueVariant() + variant.id}">variant </label>
 
     </li>
     </ul>
-</div>
    <button type="submit">Complete</button>
 </form>
 
