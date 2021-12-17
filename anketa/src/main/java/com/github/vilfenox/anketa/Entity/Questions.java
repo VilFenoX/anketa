@@ -1,13 +1,15 @@
 package com.github.vilfenox.anketa.Entity;
 
 import com.github.vilfenox.anketa.model.Choice;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "questions")
 @EqualsAndHashCode(exclude = "questionnaire")
@@ -31,6 +33,4 @@ public class Questions {
     @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
     private List<Variants> variants;
 
-    public Questions() {
-    }
 }

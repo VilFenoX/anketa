@@ -38,7 +38,10 @@ create table variants
     value varchar not null,
     question_id bigint not null,
         constraint variants_questions_id_fk
-        foreign key (question_id) references questions(id)
+        foreign key (question_id) references questions(id),
+    answer_id bigint not null,
+    constraint answers_questions_id_fk
+        foreign key (answer_id) references answers(id)
 );
 CREATE TABLE user_variant
 (
@@ -56,3 +59,9 @@ alter table answers
         primary key;
 alter table answers
     drop column user_id;
+
+
+alter table variants
+    add answer_id bigint,
+    add constraint answers_questions_id_fk
+    foreign key (answer_id) references answers(id);

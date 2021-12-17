@@ -1,12 +1,16 @@
 package com.github.vilfenox.anketa.Entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "answers")
 public class Answers {
@@ -16,8 +20,9 @@ public class Answers {
     private Long id;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+/*    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name="variant_id")
-    private Variants variant;
-
+    private Variants variant;*/
+    @OneToMany(mappedBy = "answer", fetch = FetchType.EAGER)
+    private List<Variants> answers;
 }

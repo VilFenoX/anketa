@@ -5,7 +5,10 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "questionnaires")
 @EqualsAndHashCode(exclude = "questions")
@@ -20,8 +23,5 @@ public class Questionnaires {
 
     @OneToMany(mappedBy = "questionnaire", fetch = FetchType.EAGER)
     private List<Questions> questions;
-
-    public Questionnaires() {
-    }
 
 }

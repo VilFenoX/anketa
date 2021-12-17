@@ -2,13 +2,16 @@ package com.github.vilfenox.anketa.Entity;
 
 import com.github.vilfenox.anketa.model.Role;
 import com.github.vilfenox.anketa.model.Status;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
