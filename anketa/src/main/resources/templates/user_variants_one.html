@@ -14,10 +14,10 @@
 
 <form name="myForm" action="#" th:action="@{/user/save_answer}" method="post" th:object="${answer}">
     <input type="hidden" th:text="${user.getFirstName()}"
-           th:value="${user.id}"
-           th:field="${user}"/>
+           th:value="${user}"
+           th:field="${user.id}"/>
 
-    <span th:text="${question.getValueQuestion()}" th:name="${question.getValueQuestion()}">question</span>
+    <span th:text="${question.getValueQuestion() + question.id}" th:name="${question.getValueQuestion()}">question</span>
     <ul>
 
     <li th:each="variant : ${question.getVariants()}">

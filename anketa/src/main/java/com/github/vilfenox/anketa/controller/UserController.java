@@ -87,7 +87,7 @@ public class UserController {
             answer.setUser(user);
             answersRepository.save(answer);
         }
-        answer.setAnswers(answer.getAnswers());
+       // answer.setAnswers(answer.getAnswers());
 
         return "/success";
     }
