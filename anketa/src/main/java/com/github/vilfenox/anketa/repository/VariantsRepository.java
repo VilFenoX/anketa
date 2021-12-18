@@ -1,5 +1,6 @@
 package com.github.vilfenox.anketa.repository;
 
+import com.github.vilfenox.anketa.Entity.Questionnaires;
 import com.github.vilfenox.anketa.Entity.Questions;
 import com.github.vilfenox.anketa.Entity.Variants;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,6 @@ public interface VariantsRepository extends CrudRepository<Variants, Long> {
                                     "JOIN q.questionnaire qn " +
                                     "WHERE qn.id = :qN")
     List<Variants> findVariantsByQuestions_questionnairesId(Long qN);
+
+   // Iterable<Variants> findByQuestionnaires(Questionnaires questionnaire);
 }

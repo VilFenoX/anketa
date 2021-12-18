@@ -19,9 +19,12 @@ public class Answers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    public Questions question;
+    @ManyToOne
     public Variants variant;
     @ManyToOne
     public User user;
+
 /*    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name="variant_id")
     private Variants variant;*/

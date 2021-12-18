@@ -13,7 +13,7 @@
 </div>
 
 <form name="myForm" action="#" th:action="@{/user/save_answer}" method="post" th:object="${answer}">
-    <input type="hidden"
+    <input type="hidden" th:text="${user.getFirstName()}"
            th:value="${user.id}"
            th:field="${user}"/>
 

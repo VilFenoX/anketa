@@ -52,6 +52,22 @@ CREATE TABLE user_variant
     CONSTRAINT "FK_variant_id" FOREIGN KEY ("variant_id")
         REFERENCES "variants" ("id")
 );
+create table answers
+(
+    id bigserial
+        constraint answers_pk
+            primary key,
+    question_id bigint not null,
+    constraint answers_questions_id_fk
+        foreign key (question_id) references questions(id),
+    variant_id bigint not null,
+    constraint answers_variants_id_fk
+        foreign key (variant_id) references variants(id),
+    user_id bigint not null,
+    constraint answers_users_id_fk
+        foreign key (user_id) references users(id)
+);
+
 alter table answers rename to answers;
 alter table answers
     add id bigserial
@@ -68,3 +84,8 @@ alter table variants
 
 alter table answers
     drop column question_id;
+
+alter table answers
+    add question_id bigint,
+    add constraint answers_questions_id_fk
+        foreign key (question_id) references questions(id);

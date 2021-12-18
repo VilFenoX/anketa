@@ -49,8 +49,21 @@ public class UserController {
         User user = userRepository.findOneByEmail(currentPrincipalName).get();
         model.addAttribute("user", user);
 
-        model.addAttribute("questionnaire", questionnaire);
 
+/*// получаем список вопросов
+        Iterable<Variants> variantsFromBD = variantsRepository.findByQuestionnaires(questionnaire);
+        for (Variants variant: variantsFromBD) {
+            // теоритически пользователь мог уже отвечать на эти вопросы
+            // поэтому было бы неплохо найти ответ этого пользователя на данный вопрос в базе данных
+            Answer answer = answerRepository.findByUserAndQuestion(user, question)
+                    .orElseGet(() -> { // в противном случае создаем новый объект ответа
+                        Answer newAnswer = new Answer();
+                        newAnswer.setUser(user); // и указываем пользователя
+                        newAnswer.setQuestion(question); // и вопрос
+                        return newAnswer;
+                    });
+            answers.add(answer);*/
+        model.addAttribute("questionnaire", questionnaire);
 
         Stack<Questions> questionsFromBD = questionsRepository.findAllByQuestionnaire_Id(id);
         model.addAttribute("question", questionsFromBD.pop());
@@ -69,6 +82,7 @@ public class UserController {
              ) {
             System.out.println(ans);
             answers.add(ans);
+            answer.setQuestion(ans.getQuestion());
             answer.setVariant(ans);
             answer.setUser(user);
             answersRepository.save(answer);
