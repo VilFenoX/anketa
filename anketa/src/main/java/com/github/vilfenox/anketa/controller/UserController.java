@@ -4,11 +4,14 @@ package com.github.vilfenox.anketa.controller;
 import com.github.vilfenox.anketa.Entity.*;
 import com.github.vilfenox.anketa.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 @Controller
@@ -37,9 +40,15 @@ public class UserController {
     @GetMapping("/questionnaire/{id}")
   //  @PreAuthorize("hasAuthority('developers:read')")
     public String listQuestion(@PathVariable Long id, Model model){
-
-
+// получаем авторизированного пользователя
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        // получаем анкету
         Questionnaires questionnaire = questionnairesRepository.findById(id).get();
+        // получаем пользователя
+        User user = userRepository.findOneByEmail(currentPrincipalName).get();
+        model.addAttribute("user", user);
+
         model.addAttribute("questionnaire", questionnaire);
 
 
@@ -47,12 +56,25 @@ public class UserController {
         model.addAttribute("question", questionsFromBD.pop());
         model.addAttribute("answer", new Answers());
 
-        return "/user_variants";
+       return "user_variants_one";
+        //return "user_variants_all";
     }
 
     @PostMapping("/save_answer")
-    public String saveAnswer(@ModelAttribute("answer") Answers answer, Model model){
-        answersRepository.save(answer);
+    public String saveAnswer(@ModelAttribute("answer") Answers answer,
+                             @ModelAttribute("user") User user, Model model){
+       List<Variants> answers = new ArrayList<>();
+        System.out.println(user);
+        for (Variants ans: answer.getAnswers()
+             ) {
+            System.out.println(ans);
+            answers.add(ans);
+            answer.setVariant(ans);
+            answer.setUser(user);
+            answersRepository.save(answer);
+        }
+        answer.setAnswers(answer.getAnswers());
+
         return "/success";
     }
 }

@@ -29,7 +29,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(@ModelAttribute("user") User user, Model model){
-        Optional<User> userFromDB = userRepository.findByEmail(user.getEmail());
+        Optional<User> userFromDB = userRepository.findOneByEmail(user.getEmail());
         if (userFromDB.isPresent()) {
             model.addAttribute("message", "User exists!");
             return "/registration";

@@ -65,3 +65,6 @@ alter table variants
     add answer_id bigint,
     add constraint answers_questions_id_fk
     foreign key (answer_id) references answers(id);
+
+alter table answers
+    drop column question_id;
