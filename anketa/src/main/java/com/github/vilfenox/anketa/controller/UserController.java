@@ -2,6 +2,7 @@ package com.github.vilfenox.anketa.controller;
 
 
 import com.github.vilfenox.anketa.Entity.*;
+import com.github.vilfenox.anketa.model.QuestionnairesForm;
 import com.github.vilfenox.anketa.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 @Controller
 @RequestMapping("/user")
@@ -50,45 +50,44 @@ public class UserController {
         model.addAttribute("user", user);
 
 
-/*// получаем список вопросов
-        Iterable<Variants> variantsFromBD = variantsRepository.findByQuestionnaires(questionnaire);
-        for (Variants variant: variantsFromBD) {
+        // создаем список для хранения ответов
+        List<Answers> answers = new ArrayList<>();
+        // получаем список вопросов
+        Iterable<Questions> questionsFromBD = questionsRepository.findByQuestionnaire(questionnaire);
+        for (Questions question: questionsFromBD) {
             // теоритически пользователь мог уже отвечать на эти вопросы
             // поэтому было бы неплохо найти ответ этого пользователя на данный вопрос в базе данных
-            Answer answer = answerRepository.findByUserAndQuestion(user, question)
+            Answers answer = answersRepository.findOneByUserAndQuestion(user, question)
                     .orElseGet(() -> { // в противном случае создаем новый объект ответа
-                        Answer newAnswer = new Answer();
+                        Answers newAnswer = new Answers();
                         newAnswer.setUser(user); // и указываем пользователя
                         newAnswer.setQuestion(question); // и вопрос
                         return newAnswer;
                     });
-            answers.add(answer);*/
-        model.addAttribute("questionnaire", questionnaire);
-
-        Stack<Questions> questionsFromBD = questionsRepository.findAllByQuestionnaire_Id(id);
-        model.addAttribute("question", questionsFromBD.pop());
-        model.addAttribute("answer", new Answers());
-
-       return "user_variants_one";
-        //return "user_variants_all";
+            answers.add(answer);
+        }
+        // подготовливаем форму
+        QuestionnairesForm questionnairesForm = new QuestionnairesForm();
+        questionnairesForm.setQuestionnaires(questionnaire);
+        questionnairesForm.setAnswers(answers);
+        // и передаем на страницу
+        model.addAttribute("questionnairesForm", questionnairesForm);
+       //return "user_variants_one";
+        return "user_variants_all";
     }
 
     @PostMapping("/save_answer")
-    public String saveAnswer(@ModelAttribute("answer") Answers answer,
+    public String saveAnswer(@ModelAttribute("questionnairesForm") QuestionnairesForm questionnairesForm,
                              @ModelAttribute("user") User user, Model model){
-       List<Variants> answers = new ArrayList<>();
-        System.out.println(user);
-        for (Variants ans: answer.getAnswers()
-             ) {
-            System.out.println(ans);
-            answers.add(ans);
-            answer.setQuestion(ans.getQuestion());
-            answer.setVariant(ans);
-            answer.setUser(user);
-            answersRepository.save(answer);
+        for (Answers ans: questionnairesForm.getAnswers()) {
+            for (Variants ansVar : ans.getAnswer()) {
+                Answers answer = new Answers();
+                answer.setQuestion(ansVar.getQuestion());
+                answer.setVariant(ansVar);
+                answer.setUser(user);
+                answersRepository.save(answer);
+            }
         }
-       // answer.setAnswers(answer.getAnswers());
-
         return "/success";
     }
 }

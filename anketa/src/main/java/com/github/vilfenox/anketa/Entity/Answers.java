@@ -29,5 +29,5 @@ public class Answers {
     @JoinColumn (name="variant_id")
     private Variants variant;*/
     @OneToMany(mappedBy = "answer", fetch = FetchType.EAGER)
-    private List<Variants> answers;
+    private List<Variants> answer;
 }
