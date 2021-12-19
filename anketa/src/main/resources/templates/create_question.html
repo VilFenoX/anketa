@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Create New Question</title>
+</head>
+<body>
+<div th:if="${param.logout}">
+    You have been logged out.
+</div>
+<h1>Create New Question</h1>
+<p th:text="${message}"></p>
+<form th:action="@{/api/create_question}" method="post" >
+    <label for="name">Enter Value: </label>
+    <input type="text" th:field="*{question.valueQuestion}" id="name"/>
+    <br/>
+    <h2>One or more response values </h2>
+    <div class="form-group">
+        <select th:field="*{question.choiceType}" >
+            <option th:each="type : ${T(com.github.vilfenox.anketa.model.Choice).values()}"
+                    th:value="${type}"
+                    th:text="${type}">
+            </option>
+        </select>
+    </div>
+
+    <div class="col-auto">
+        <h2>Questinnaire - </h2>
+        <input type="hidden"
+               th:text="${questionnaire.getNameQuestionnaire()}"
+               th:value="${questionnaire.id}" th:name="questionnaire"
+               class="form control">
+    </div>
+
+    <input type="submit" value="Create!"/>
+</form>
+</body>
+</html>

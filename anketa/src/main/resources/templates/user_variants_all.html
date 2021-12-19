@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form action="#" th:action="@{/user/save_answer}" method="post" th:model="questionnairesForm">
+    <input type="hidden" th:text="${user.getFirstName()}"
+           th:value="${user}"
+           th:field="${user.id}"/>
+    <input type="hidden" th:value="${questionnairesForm.questionnaires.id}" th:field="*{questionnairesForm.questionnaires.id}"
+           th:text="${questionnairesForm.getQuestionnaires().nameQuestionnaire}"/>
+    <input type="hidden" th:value="${questionnairesForm.questionnaires.nameQuestionnaire}" th:field="*{questionnairesForm.questionnaires.nameQuestionnaire}"/>
+    <div th:each="answer,answerStat : ${questionnairesForm.getAnswers}">
+        <h2 th:text="${answer.question.valueQuestion}"></h2>
+        <input type="hidden" th:value="${answer.id}" th:field="*{questionnairesForm.answers[__${answerStat.index}__].id}"/>
+        <input type="hidden" th:value="${answer.question.valueQuestion}" th:field="*{questionnairesForm.answers[__${answerStat.index}__].question.valueQuestion}"/>
+        <input type="hidden" th:value="${answer.question.id}" th:field="*{questionnairesForm.answers[__${answerStat.index}__].question.id}"/>
+        <ul>
+            <li th:each="variant : ${answer.getQuestion().getVariants()}">
+                <input th:type="${variant.question.choiceType}" th:id="${variant.id}"
+                       th:field="*{questionnairesForm.answers[__${answerStat.index}__].answer}"
+                       th:value="${variant.id}">
+                <label  th:for="${variant.id}" th:text="${variant.getValueVariant()}"></label>
+            </li>
+        </ul>
+    </div>
+    <button type="submit">Complete</button>
+</form>
+</body>
+</html>

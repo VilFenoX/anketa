@@ -1,0 +1,91 @@
+create table users
+(
+	id bigserial
+		constraint users_pk
+			primary key,
+	email varchar(255) not null,
+	first_name varchar(50) not null,
+	last_name varchar(50) not null,
+	password varchar(250) not null,
+	role varchar(10) default 'USER' not null,
+	status varchar(10) default 'ACTIVE' not null
+);
+
+create table questionnaires
+(
+	id bigserial
+		constraint questionnaires_pk
+			primary key,
+	name_questionnaire varchar
+);
+
+create table questions
+(
+	id bigserial
+		constraint questions_pk
+			primary key,
+	value varchar not null,
+	choice_type varchar not null,
+	questionnaire_id bigint not null,
+	constraint questions_questionnaires_id_fk
+    		foreign key (questionnaire_id) references questionnaires(id)
+);
+create table variants
+(
+    id bigserial
+        constraint variants_pk
+            primary key,
+    value varchar not null,
+    question_id bigint not null,
+        constraint variants_questions_id_fk
+        foreign key (question_id) references questions(id),
+    answer_id bigint not null,
+    constraint answers_questions_id_fk
+        foreign key (answer_id) references answers(id)
+);
+CREATE TABLE user_variant
+(
+    user_id bigserial NOT NULL,
+    variant_id bigserial NOT NULL,
+    CONSTRAINT "FK_user_id" FOREIGN KEY ("user_id")
+        REFERENCES "users" ("id"),
+    CONSTRAINT "FK_variant_id" FOREIGN KEY ("variant_id")
+        REFERENCES "variants" ("id")
+);
+create table answers
+(
+    id bigserial
+        constraint answers_pk
+            primary key,
+    question_id bigint not null,
+    constraint answers_questions_id_fk
+        foreign key (question_id) references questions(id),
+    variant_id bigint not null,
+    constraint answers_variants_id_fk
+        foreign key (variant_id) references variants(id),
+    user_id bigint not null,
+    constraint answers_users_id_fk
+        foreign key (user_id) references users(id)
+);
+
+alter table answers rename to answers;
+alter table answers
+    add id bigserial
+     constraint answers_pk
+        primary key;
+alter table answers
+    drop column user_id;
+
+
+alter table variants
+    add answer_id bigint,
+    add constraint answers_questions_id_fk
+    foreign key (answer_id) references answers(id);
+
+alter table answers
+    drop column question_id;
+
+alter table answers
+    add question_id bigint,
+    add constraint answers_questions_id_fk
+        foreign key (question_id) references questions(id);

@@ -1,3 +1,28 @@
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+<div sec:authorize="isAuthenticated()">
+    Authenticated as <span sec:authentication="name"></span></div>
 <div class="container">
-    <h1>Congrats!!! You did it!!</h1>
+    <h1>Congrats!!! You did it! Select a questionnaire </h1>
+
+    <form action="/api" method="GET">
+        <button type="submit">List Questionnaires</button>
+    </form>
+
+    <form action="/api/create" method="GET">
+        <button type="submit">Create New Questionnaire</button>
+    </form>
+
+    <h1> For User </h1>
+
+    <form action="/user" method="GET">
+        <button type="submit">List Questionnaires</button>
+    </form>
+
+    <form action="/auth/logout" method="POST">
+        <button type="submit">Logout</button>
+    </form>
 </div>
+</body>
+</html>

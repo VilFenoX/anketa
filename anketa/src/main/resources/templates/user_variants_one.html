@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Variants</title>
+
+</head>
+<body>
+<div>
+
+    <h2>Variants for Questionnaire : </h2>
+    <p th:text="${questionnaire.getNameQuestionnaire()}">questionnaire</p>
+</div>
+
+<form name="myForm" action="#" th:action="@{/user/save_answer}" method="post" th:object="${answer}">
+    <input type="hidden" th:text="${user.getFirstName()}"
+           th:value="${user}"
+           th:field="${user.id}"/>
+
+    <span th:text="${question.getValueQuestion() + question.id}" th:name="${question.getValueQuestion()}">question</span>
+    <ul>
+
+    <li th:each="variant : ${question.getVariants()}">
+
+        <input th:type="${question.choiceType}"   th:field="*{answers}" th:value="${variant.id}" />
+        <label th:for="${question.getValueQuestion()}"  th:text="${variant.getValueVariant() + variant.id}">variant </label>
+
+    </li>
+    </ul>
+   <button type="submit">Complete</button>
+</form>
+
+</body>
+</html>

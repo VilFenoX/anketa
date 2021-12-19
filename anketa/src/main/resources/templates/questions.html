@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Questions</title>
+</head>
+<body>
+<div>
+    <h2>Questions for Questionnaire : </h2>
+    <p th:text="${questionnaire.getNameQuestionnaire()}">questionnaire</p>
+</div>
+
+<div th:each="question : ${questions}">
+    <a th:href="@{/api/question/{id}(id=${question.getId()})}" th:text="${question.getValueQuestion()}">question</a>
+</div>
+
+<form   th:action="@{/api/questionnaire/{id}/create_question(id=${questionnaire.getId()})}" method="GET">
+    <button type="submit">Create New Question</button>
+</form>
+
+</body>
+</html>
