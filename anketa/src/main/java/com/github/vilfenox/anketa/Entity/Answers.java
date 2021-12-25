@@ -25,9 +25,6 @@ public class Answers {
     @ManyToOne
     public User user;
 
-/*    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name="variant_id")
-    private Variants variant;*/
     @OneToMany(mappedBy = "answer", fetch = FetchType.EAGER)
     private List<Variants> answer;
 }

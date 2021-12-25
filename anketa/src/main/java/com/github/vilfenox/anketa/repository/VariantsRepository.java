@@ -21,5 +21,4 @@ public interface VariantsRepository extends CrudRepository<Variants, Long> {
                                     "WHERE qn.id = :qN")
     List<Variants> findVariantsByQuestions_questionnairesId(Long qN);
 
-   // Iterable<Variants> findByQuestionnaires(Questionnaires questionnaire);
 }

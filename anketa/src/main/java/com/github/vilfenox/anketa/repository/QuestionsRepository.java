@@ -12,10 +12,6 @@ public interface QuestionsRepository extends CrudRepository<Questions, Long> {
 
     Iterable<Questions> findAll();
     Iterable<Questions> findAllByQuestionnaire_Id(Long id);
-    //Stack<Questions> findAllByQuestionnaire_Id(Long id);
-
-    Optional<Questions> findByValueQuestion(String valueQuestion);
     Optional<Questions> findByValueQuestionAndQuestionnaire_Id(String valueQuestion, Long id);
-
     Iterable<Questions> findByQuestionnaire(Questionnaires questionnaire);
 }

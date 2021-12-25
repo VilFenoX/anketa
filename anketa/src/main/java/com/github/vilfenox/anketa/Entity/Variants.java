@@ -25,9 +25,6 @@ public class Variants {
     @JoinColumn (name="question_id")
     private Questions question;
 
-/*    @OneToMany(mappedBy = "variant", fetch = FetchType.EAGER)
-    private List<Answers> answers;*/
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name="answer_id")
     private Answers answer;

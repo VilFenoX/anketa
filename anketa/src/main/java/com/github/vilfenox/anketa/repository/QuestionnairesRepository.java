@@ -10,7 +10,4 @@ public interface QuestionnairesRepository extends CrudRepository<Questionnaires,
     Iterable<Questionnaires> findAll();
     Optional<Questionnaires> findByNameQuestionnaire(String nameQuestionnaire);
     Optional<Questionnaires> findAllById(Long id);
-
-    /*@Override
-    Optional<Questionnaires> findById(Long id);*/
 }
