@@ -1,9 +1,8 @@
-package com.github.vilfenox.anketa.Entity;
+package com.github.vilfenox.anketa.db;
 
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Setter
 @Getter

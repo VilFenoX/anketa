@@ -1,6 +1,6 @@
 package com.github.vilfenox.anketa.repository;
 
-import com.github.vilfenox.anketa.Entity.Questionnaires;
+import com.github.vilfenox.anketa.db.Questionnaires;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

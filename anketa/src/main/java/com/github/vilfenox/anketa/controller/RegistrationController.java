@@ -2,7 +2,7 @@ package com.github.vilfenox.anketa.controller;
 
 import com.github.vilfenox.anketa.model.Role;
 import com.github.vilfenox.anketa.model.Status;
-import com.github.vilfenox.anketa.Entity.User;
+import com.github.vilfenox.anketa.db.User;
 import com.github.vilfenox.anketa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
