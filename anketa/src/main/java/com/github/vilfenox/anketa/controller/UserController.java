@@ -57,7 +57,7 @@ public class UserController {
         for (Questions question: questionsFromBD) {
             // теоритически пользователь мог уже отвечать на эти вопросы
             // поэтому было бы неплохо найти ответ этого пользователя на данный вопрос в базе данных
-            Answers answer = answersRepository.findOneByUserAndQuestion(user, question)
+            Answers answer = answersRepository.findOneByUserAndQuestion(user, question)  //... если уже заполнял выдает ошибку
                     .orElseGet(() -> { // в противном случае создаем новый объект ответа
                         Answers newAnswer = new Answers();
                         newAnswer.setUser(user); // и указываем пользователя
@@ -80,13 +80,20 @@ public class UserController {
     public String saveAnswer(@ModelAttribute("questionnairesForm") QuestionnairesForm questionnairesForm,
                              @ModelAttribute("user") User user, Model model){
         for (Answers ans: questionnairesForm.getAnswers()) {
-            for (Variants ansVar : ans.getAnswer()) {
-                Answers answer = new Answers();
-                answer.setQuestion(ansVar.getQuestion());
-                answer.setVariant(ansVar);
-                answer.setUser(user);
-                answersRepository.save(answer);
-            }
+            Answers answer = new Answers();
+            Variants variant = new Variants();
+           // variant.setValueVariant(ans.);
+            variant.getAnswers().add(ans);
+
+            variant.setQuestion(ans.getQuestion());
+            variant.setId(ans.getVariants());
+           // answer.setVariant(ans.getVariant());
+           // answer.setQuestion(ans.getQuestion());
+           // answer.setUser(user);
+           // answer.setVariants(ans.getVariants());
+
+            answersRepository.save(answer);
+
         }
         return "/success";
     }

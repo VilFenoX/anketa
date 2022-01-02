@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -20,14 +19,11 @@ public class Answers {
     private Long id;
     @ManyToOne
     public Questions question;
-    @ManyToOne
-    public Variants variant;
+/*    @ManyToOne
+    public Variants variant;*/
     @ManyToOne
     public User user;
 
-/*    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name="variant_id")
-    private Variants variant;*/
-    @OneToMany(mappedBy = "answer", fetch = FetchType.EAGER)
-    private List<Variants> answer;
+    @ManyToMany(mappedBy = "answers")
+    private Set<Variants> variants;
 }

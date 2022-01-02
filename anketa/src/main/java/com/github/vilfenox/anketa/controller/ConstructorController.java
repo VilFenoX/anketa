@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/api")
-public class MainController {
+public class ConstructorController {
 
     @Autowired
     private QuestionnairesRepository questionnairesRepository;

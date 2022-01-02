@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Watch answers</title>
+</head>
+<body>
+<p th:text="${message}"></p>
+<div th:each="user : ${users}">
+    <a th:href="@{/answers/user/{id}(id=${user.getId()})}" th:text="${user.getEmail()}"></a>
+</div>
+
+<form action="/answers/user_list" method="GET">
+    <button type="submit">Назад</button>
+</form>
+
+
+</body>
+</html>
