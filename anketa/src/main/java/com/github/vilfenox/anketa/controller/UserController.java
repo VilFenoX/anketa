@@ -104,11 +104,12 @@ public class UserController {
                 Answers answer = new Answers();
 
                 variant = variantsRepository.findById(ansVar.getId()).get();
-                variant.getAnswers().add(ans);
+
                 answer.setQuestion(ansVar.getQuestion());
                 answer.getVariants().add(ansVar);
                 answer.setUser(user);
                 answersRepository.save(answer);
+                variant.getAnswers().add(answer);
                 variantsRepository.save(variant);
             }
         }
