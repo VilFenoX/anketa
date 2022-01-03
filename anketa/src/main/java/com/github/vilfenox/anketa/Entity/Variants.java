@@ -32,9 +32,9 @@ public class Variants {
     @JoinColumn (name="answer_id")
     private Answers answer;*/
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name = "variants_answers",
             joinColumns = @JoinColumn(name = "variant_id"),
             inverseJoinColumns = @JoinColumn(name = "answer_id"))
-    private Set<Answers> answers;
+    private List<Answers> answers = new ArrayList<>();
 }

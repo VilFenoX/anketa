@@ -3,7 +3,9 @@ package com.github.vilfenox.anketa.Entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -24,6 +26,6 @@ public class Answers {
     @ManyToOne
     public User user;
 
-    @ManyToMany(mappedBy = "answers")
-    private Set<Variants> variants;
+    @ManyToMany(mappedBy = "answers", cascade=CascadeType.ALL)
+    private List<Variants> variants = new ArrayList<>();
 }

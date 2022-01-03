@@ -76,24 +76,41 @@ public class UserController {
         return "user_variants_all";
     }
 
+/*    @PostMapping("/save_answer")
+    public String saveAnswer(@ModelAttribute("questionnairesForm") QuestionnairesForm questionnairesForm,
+                             @ModelAttribute("user") User user, Model model){
+        Variants variant = new Variants();
+        variant.setAnswers(questionnairesForm.getAnswers());
+        for (Answers ans: questionnairesForm.getAnswers()) {
+            Answers answer = new Answers();
+
+           answer.setQuestion(ans.getQuestion());
+           answer.setUser(user);
+           answer.setVariants(ans.getVariants());
+
+            answersRepository.save(answer);
+            variantsRepository.save(variant);
+        }
+        return "/success";
+    }*/
+
     @PostMapping("/save_answer")
     public String saveAnswer(@ModelAttribute("questionnairesForm") QuestionnairesForm questionnairesForm,
                              @ModelAttribute("user") User user, Model model){
+
+          Variants variant = new Variants();
         for (Answers ans: questionnairesForm.getAnswers()) {
-            Answers answer = new Answers();
-            Variants variant = new Variants();
-           // variant.setValueVariant(ans.);
-            variant.getAnswers().add(ans);
+            for (Variants ansVar : ans.getVariants()) {
+                Answers answer = new Answers();
 
-            variant.setQuestion(ans.getQuestion());
-            variant.setId(ans.getVariants());
-           // answer.setVariant(ans.getVariant());
-           // answer.setQuestion(ans.getQuestion());
-           // answer.setUser(user);
-           // answer.setVariants(ans.getVariants());
-
-            answersRepository.save(answer);
-
+                variant = variantsRepository.findById(ansVar.getId()).get();
+                variant.getAnswers().add(ans);
+                answer.setQuestion(ansVar.getQuestion());
+                answer.getVariants().add(ansVar);
+                answer.setUser(user);
+                answersRepository.save(answer);
+                variantsRepository.save(variant);
+            }
         }
         return "/success";
     }
