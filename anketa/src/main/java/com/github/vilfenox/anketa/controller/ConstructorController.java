@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -27,7 +28,7 @@ public class ConstructorController {
 
     @GetMapping
     public String getAllQuestionnaires(Model model){
-        model.addAttribute("questionnaires",questionnairesRepository.findAll());
+        model.addAttribute("questionnaires", questionnairesRepository.findAll());
         return "/questionnaires";
     }
 
@@ -59,6 +60,34 @@ public class ConstructorController {
         model.addAttribute("questions", questionsRepository.findAllByQuestionnaire_Id(id));
         return "/questions";
     }
+
+    @GetMapping("/questionnaire/{id}/edit")
+    //  @PreAuthorize("hasAuthority('developers:read')")
+    public String listQuestionnaireEdit(@PathVariable Long id, Model model){
+        Questionnaires questionnaire = questionnairesRepository.findById(id).get();
+        model.addAttribute("questionnaire", questionnaire);
+        return "/questionnaires_edit";
+    }
+
+    @RequestMapping("/questionnaire/{id}")
+    //  @PreAuthorize("hasAuthority('developers:read')")
+    public String patchQuestionnaire(@ModelAttribute("questionnaire") Questionnaires questionnaire,
+                                     @PathVariable Long id){
+        Questionnaires questionnaireFromDB = questionnairesRepository.findById(id).get();
+        questionnaireFromDB.setNameQuestionnaire(questionnaire.getNameQuestionnaire());
+        questionnairesRepository.save(questionnaireFromDB);
+        return "questionnaires";
+    }
+
+    @RequestMapping("/questionnaire/{id}/delete")
+    //  @PreAuthorize("hasAuthority('developers:read')")
+    public String deleteQuestionnaire(@ModelAttribute("questionnaire") Questionnaires questionnaire,
+                                     @PathVariable Long id){
+        Questionnaires questionnaireFromDB = questionnairesRepository.findById(id).get();
+        questionnairesRepository.delete(questionnaireFromDB);
+        return "questionnaires";
+    }
+
 
     @GetMapping("/questionnaire/{id}/create_question")
     public String createQuestion(@PathVariable Long id, Model model){
@@ -101,6 +130,33 @@ public class ConstructorController {
         model.addAttribute("question", question);
         model.addAttribute("variants", variantsRepository.findAllByQuestion_Id(id));
         return "/create_variant";
+    }
+
+    @GetMapping("/question/{id}/edit")
+    //  @PreAuthorize("hasAuthority('developers:read')")
+    public String listQuestionEdit(@PathVariable Long id, Model model){
+        Questions question = questionsRepository.findById(id).get();
+        model.addAttribute("questionnaire", question);
+        return "/question_edit";
+    }
+
+    @RequestMapping("/questionnaire/{id}")
+    //  @PreAuthorize("hasAuthority('developers:read')")
+    public String patchQuestion(@ModelAttribute("questionnaire") Questionnaires questionnaire,
+                                     @PathVariable Long id){
+        Questionnaires questionnaireFromDB = questionnairesRepository.findById(id).get();
+        questionnaireFromDB.setNameQuestionnaire(questionnaire.getNameQuestionnaire());
+        questionnairesRepository.save(questionnaireFromDB);
+        return "questionnaires";
+    }
+
+    @RequestMapping("/questionnaire/{id}/delete")
+    //  @PreAuthorize("hasAuthority('developers:read')")
+    public String deleteQuestion(@ModelAttribute("questionnaire") Questionnaires questionnaire,
+                                      @PathVariable Long id){
+        Questionnaires questionnaireFromDB = questionnairesRepository.findById(id).get();
+        questionnairesRepository.delete(questionnaireFromDB);
+        return "questionnaires";
     }
 
     @PostMapping("/create_variant")

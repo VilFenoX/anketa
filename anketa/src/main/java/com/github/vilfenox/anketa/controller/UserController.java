@@ -85,13 +85,12 @@ public class UserController {
         for (Answers ans: questionnairesForm.getAnswers()) {
             Answers answer = new Answers();
             for (Variants ansVar : ans.getVariants()) {
-
                 variant = variantsRepository.findById(ansVar.getId()).get();
                 answer.setQuestion(ansVar.getQuestion());
-                answer.getVariants().add(ansVar);
+                answer.getVariants().add(ansVar); // связь мани ту мани требует взаимодействия ответов и
+                                                  // вариантов, они должны ссылаться друг на друга, как тут, и сохряняться вместе
                 answer.setUser(user);
                 variant.getAnswers().add(answer);
-
             }
             answersRepository.save(answer);
             variantsRepository.save(variant);
