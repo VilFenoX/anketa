@@ -46,9 +46,9 @@ public class ConstructorController {
             model.addAttribute("message", "Questionnaire exists!");
             return "create_questionnaire";
         }
-        model.addAttribute("questionnaires",questionnairesRepository.findAll());
         questionnaire.setNameQuestionnaire(questionnaire.getNameQuestionnaire());
         questionnairesRepository.save(questionnaire);
+        model.addAttribute("questionnaires",questionnairesRepository.findAll());
         return "/questionnaires";
     }
 
@@ -72,19 +72,20 @@ public class ConstructorController {
     @RequestMapping("/questionnaire/{id}")
     //  @PreAuthorize("hasAuthority('developers:read')")
     public String patchQuestionnaire(@ModelAttribute("questionnaire") Questionnaires questionnaire,
-                                     @PathVariable Long id){
+                                     @PathVariable Long id, Model model){
         Questionnaires questionnaireFromDB = questionnairesRepository.findById(id).get();
         questionnaireFromDB.setNameQuestionnaire(questionnaire.getNameQuestionnaire());
         questionnairesRepository.save(questionnaireFromDB);
+        model.addAttribute("questionnaires", questionnairesRepository.findAll());
         return "questionnaires";
     }
 
     @RequestMapping("/questionnaire/{id}/delete")
     //  @PreAuthorize("hasAuthority('developers:read')")
-    public String deleteQuestionnaire(@ModelAttribute("questionnaire") Questionnaires questionnaire,
-                                     @PathVariable Long id){
+    public String deleteQuestionnaire(@PathVariable Long id, Model model){
         Questionnaires questionnaireFromDB = questionnairesRepository.findById(id).get();
         questionnairesRepository.delete(questionnaireFromDB);
+        model.addAttribute("questionnaires", questionnairesRepository.findAll());
         return "questionnaires";
     }
 
@@ -102,7 +103,6 @@ public class ConstructorController {
     public String addQuestion(@ModelAttribute("question") Questions question,
                               @ModelAttribute("questionnaire") Questionnaires questionnaire,
                               Model model){
-        //Questionnaires questionnaires = questionnaire;
         Optional<Questions> questionsFromBD = questionsRepository.findByValueQuestionAndQuestionnaire_Id(question.getValueQuestion(), questionnaire.getId());
         if (questionsFromBD.isPresent()) {
             model.addAttribute("message", "Question exists!");
@@ -113,6 +113,44 @@ public class ConstructorController {
         model.addAttribute("questions",questionsRepository.findAllByQuestionnaire_Id(questionnaire.getId()));
         return "questions";
     }
+
+    @GetMapping("/question/{id}/edit")
+    //  @PreAuthorize("hasAuthority('developers:read')")
+    public String listQuestionEdit(@PathVariable Long id,
+                                   @ModelAttribute("questionnaire") Questionnaires questionnaire,
+                                   Model model){
+        Questions question = questionsRepository.findById(id).get();
+        model.addAttribute("question", question);
+        model.addAttribute("questionnaire", questionnaire);
+        return "/question_edit";
+    }
+
+    @RequestMapping("/question/{id}")
+    //  @PreAuthorize("hasAuthority('developers:read')")
+    public String patchQuestion(@ModelAttribute("question") Questions question,
+                                 @PathVariable Long id, Model model){
+        Questionnaires questionnaire = questionnairesRepository.findQuestionnairesByQuestionsId(id);
+        Questions questionFromDB = questionsRepository.findById(id).get();
+        questionFromDB.setValueQuestion(question.getValueQuestion());
+        questionFromDB.setChoiceType(question.getChoiceType());
+        model.addAttribute("questionnaire", questionnaire);
+        questionsRepository.save(questionFromDB);
+        model.addAttribute("questions",questionsRepository.findAllByQuestionnaire_Id(questionnaire.getId()));
+        return "/questions";
+    }
+
+    @RequestMapping("/question/{id}/delete")
+    //  @PreAuthorize("hasAuthority('developers:read')")
+    public String deleteQuestion(@PathVariable Long id,
+                                 Model model){
+        Questionnaires questionnaire = questionnairesRepository.findQuestionnairesByQuestionsId(id);
+        Questions questionFromDB = questionsRepository.findById(id).get();
+        questionsRepository.delete(questionFromDB);
+        model.addAttribute("questionnaire", questionnaire);
+        model.addAttribute("questions",questionsRepository.findAllByQuestionnaire_Id(questionnaire.getId()));
+        return "questions";
+    }
+
 
     @GetMapping("/question/{id}")
     //  @PreAuthorize("hasAuthority('developers:read')")
@@ -132,33 +170,6 @@ public class ConstructorController {
         return "/create_variant";
     }
 
-    @GetMapping("/question/{id}/edit")
-    //  @PreAuthorize("hasAuthority('developers:read')")
-    public String listQuestionEdit(@PathVariable Long id, Model model){
-        Questions question = questionsRepository.findById(id).get();
-        model.addAttribute("questionnaire", question);
-        return "/question_edit";
-    }
-
-    @RequestMapping("/questionnaire/{id}")
-    //  @PreAuthorize("hasAuthority('developers:read')")
-    public String patchQuestion(@ModelAttribute("questionnaire") Questionnaires questionnaire,
-                                     @PathVariable Long id){
-        Questionnaires questionnaireFromDB = questionnairesRepository.findById(id).get();
-        questionnaireFromDB.setNameQuestionnaire(questionnaire.getNameQuestionnaire());
-        questionnairesRepository.save(questionnaireFromDB);
-        return "questionnaires";
-    }
-
-    @RequestMapping("/questionnaire/{id}/delete")
-    //  @PreAuthorize("hasAuthority('developers:read')")
-    public String deleteQuestion(@ModelAttribute("questionnaire") Questionnaires questionnaire,
-                                      @PathVariable Long id){
-        Questionnaires questionnaireFromDB = questionnairesRepository.findById(id).get();
-        questionnairesRepository.delete(questionnaireFromDB);
-        return "questionnaires";
-    }
-
     @PostMapping("/create_variant")
     public String addVariant(@ModelAttribute("variant") Variants variant,
                               @ModelAttribute("question") Questions question,
@@ -174,4 +185,38 @@ public class ConstructorController {
         return "variants";
     }
 
+    @GetMapping("/variant/{id}/edit")
+    //  @PreAuthorize("hasAuthority('developers:read')")
+    public String listVariantEdit(@PathVariable Long id,
+                                   Model model){
+        Variants variant = variantsRepository.findById(id).get();
+        model.addAttribute("variant", variant);
+        return "/variant_edit";
+    }
+
+    @RequestMapping("/variant/{id}")
+    //  @PreAuthorize("hasAuthority('developers:read')")
+    public String patchVariant(@PathVariable Long id,
+                               @ModelAttribute("variant") Variants variant,
+                               Model model){
+        Questions question = questionsRepository.findQuestionByVariantsId(id);
+        Variants variantFromDB = variantsRepository.findById(id).get();
+        variantFromDB.setValueVariant(variant.getValueVariant());
+        variantsRepository.save(variantFromDB);
+        model.addAttribute("question", question);
+        model.addAttribute("variants",variantsRepository.findAllByQuestion_Id(question.getId()));
+        return "/variants";
+    }
+
+    @RequestMapping("/variant/{id}/delete")
+    //  @PreAuthorize("hasAuthority('developers:read')")
+    public String deleteVariant(@PathVariable Long id,
+                                 Model model){
+        Questions question = questionsRepository.findQuestionByVariantsId(id);
+        Variants variantFromDB = variantsRepository.findById(id).get();
+        variantsRepository.delete(variantFromDB);
+        model.addAttribute("question", question);
+        model.addAttribute("variants",variantsRepository.findAllByQuestion_Id(question.getId()));
+        return "/variants";
+    }
 }

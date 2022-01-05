@@ -12,6 +12,8 @@
 
 <div th:each="variant : ${variants}">
     <a th:text="${variant.getValueVariant()}">question</a>
+    <a th:href="@{/api/variant/{id}/edit (id=${variant.getId()})}">Edit</a>
+    <a th:href="@{/api/variant/{id}/delete (id=${variant.getId()})}">Delete</a>
 </div>
 
 <form   th:action="@{/api/question/{id}/create_variant(id=${question.getId()})}" method="GET">
