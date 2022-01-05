@@ -3,7 +3,10 @@ package com.github.vilfenox.anketa.Entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -25,10 +28,13 @@ public class Variants {
     @JoinColumn (name="question_id")
     private Questions question;
 
-/*    @OneToMany(mappedBy = "variant", fetch = FetchType.EAGER)
-    private List<Answers> answers;*/
-
-    @ManyToOne(fetch = FetchType.EAGER)
+/*    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name="answer_id")
-    private Answers answer;
+    private Answers answer;*/
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name = "variants_answers",
+            joinColumns = @JoinColumn(name = "variant_id"),
+            inverseJoinColumns = @JoinColumn(name = "answer_id"))
+    private List<Answers> answers = new ArrayList<>();
 }

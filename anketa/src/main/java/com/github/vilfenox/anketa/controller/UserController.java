@@ -57,7 +57,7 @@ public class UserController {
         for (Questions question: questionsFromBD) {
             // теоритически пользователь мог уже отвечать на эти вопросы
             // поэтому было бы неплохо найти ответ этого пользователя на данный вопрос в базе данных
-            Answers answer = answersRepository.findOneByUserAndQuestion(user, question)
+            Answers answer = answersRepository.findOneByUserAndQuestion(user, question)  //... если уже заполнял выдает ошибку
                     .orElseGet(() -> { // в противном случае создаем новый объект ответа
                         Answers newAnswer = new Answers();
                         newAnswer.setUser(user); // и указываем пользователя
@@ -79,14 +79,21 @@ public class UserController {
     @PostMapping("/save_answer")
     public String saveAnswer(@ModelAttribute("questionnairesForm") QuestionnairesForm questionnairesForm,
                              @ModelAttribute("user") User user, Model model){
+
+          Variants variant = new Variants();
+
         for (Answers ans: questionnairesForm.getAnswers()) {
-            for (Variants ansVar : ans.getAnswer()) {
-                Answers answer = new Answers();
+            Answers answer = new Answers();
+            for (Variants ansVar : ans.getVariants()) {
+                variant = variantsRepository.findById(ansVar.getId()).get();
                 answer.setQuestion(ansVar.getQuestion());
-                answer.setVariant(ansVar);
+                answer.getVariants().add(ansVar); // связь мани ту мани требует взаимодействия ответов и
+                                                  // вариантов, они должны ссылаться друг на друга, как тут, и сохряняться вместе
                 answer.setUser(user);
-                answersRepository.save(answer);
+                variant.getAnswers().add(answer);
             }
+            answersRepository.save(answer);
+            variantsRepository.save(variant);
         }
         return "/success";
     }

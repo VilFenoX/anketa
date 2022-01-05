@@ -3,6 +3,7 @@ package com.github.vilfenox.anketa.Entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,14 +21,11 @@ public class Answers {
     private Long id;
     @ManyToOne
     public Questions question;
-    @ManyToOne
-    public Variants variant;
+/*    @ManyToOne
+    public Variants variant;*/
     @ManyToOne
     public User user;
 
-/*    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name="variant_id")
-    private Variants variant;*/
-    @OneToMany(mappedBy = "answer", fetch = FetchType.EAGER)
-    private List<Variants> answer;
+    @ManyToMany(mappedBy = "answers", cascade=CascadeType.ALL)
+    private List<Variants> variants = new ArrayList<>();
 }

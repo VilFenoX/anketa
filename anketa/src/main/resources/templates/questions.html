@@ -10,13 +10,14 @@
     <p th:text="${questionnaire.getNameQuestionnaire()}">questionnaire</p>
 </div>
 
-<div th:each="question : ${questions}">
+<div th:each="question : ${questions}" th:object="${questionnaire}">
     <a th:href="@{/api/question/{id}(id=${question.getId()})}" th:text="${question.getValueQuestion()}">question</a>
+    <a th:href="@{/api/question/{id}/edit (id=${question.getId()})}">Edit</a>
+    <a th:href="@{/api/question/{id}/delete (id=${question.getId()})}">Delete</a>
 </div>
 
 <form   th:action="@{/api/questionnaire/{id}/create_question(id=${questionnaire.getId()})}" method="GET">
     <button type="submit">Create New Question</button>
 </form>
-
 </body>
 </html>

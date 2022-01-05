@@ -89,3 +89,55 @@ alter table answers
     add question_id bigint,
     add constraint answers_questions_id_fk
         foreign key (question_id) references questions(id);
+
+        INSERT INTO public.questionnaires (id, name_questionnaire) VALUES (1, 'Любимые страны');
+
+
+        --
+        -- TOC entry 3352 (class 0 OID 16415)
+        -- Dependencies: 215
+        -- Data for Name: questions; Type: TABLE DATA; Schema: public; Owner: postgres
+        --
+
+        INSERT INTO public.questions (id, value, choice_type, questionnaire_id) VALUES (1, 'Любимая европейская страна', 'radio', 1);
+        INSERT INTO public.questions (id, value, choice_type, questionnaire_id) VALUES (2, 'Любимая азиатская страна', 'radio', 1);
+        INSERT INTO public.questions (id, value, choice_type, questionnaire_id) VALUES (3, 'Любимые африканские страны', 'checkbox', 1);
+        INSERT INTO public.questions (id, value, choice_type, questionnaire_id) VALUES (4, 'Любимые страны америки', 'checkbox', 1);
+
+
+        --
+        -- TOC entry 3348 (class 0 OID 16395)
+        -- Dependencies: 211
+        -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+        --
+
+        INSERT INTO public.users (id, email, first_name, last_name, password, role, status) VALUES (1, 'a', 'a', 'a', '$2a$12$0dc.Q681VqALMXtSJnjkCunuy.nW9r.Dsu1hYIbrjvXVQ1a/BgH4i', 'USER', 'ACTIVE');
+
+
+        --
+        -- TOC entry 3356 (class 0 OID 16462)
+        -- Dependencies: 219
+        -- Data for Name: variants; Type: TABLE DATA; Schema: public; Owner: postgres
+        --
+
+        INSERT INTO public.variants (id, value, question_id) VALUES (1, 'Германия', 1);
+        INSERT INTO public.variants (id, value, question_id) VALUES (2, 'Россия', 1);
+        INSERT INTO public.variants (id, value, question_id) VALUES (3, 'Англия', 1);
+        INSERT INTO public.variants (id, value, question_id) VALUES (4, 'Франция', 1);
+        INSERT INTO public.variants (id, value, question_id) VALUES (5, 'Испания', 1);
+        INSERT INTO public.variants (id, value, question_id) VALUES (6, 'Япония', 2);
+        INSERT INTO public.variants (id, value, question_id) VALUES (7, 'Сингапур', 2);
+        INSERT INTO public.variants (id, value, question_id) VALUES (8, 'Китай', 2);
+        INSERT INTO public.variants (id, value, question_id) VALUES (9, 'Вьетнам', 2);
+        INSERT INTO public.variants (id, value, question_id) VALUES (10, 'ЮАР', 3);
+        INSERT INTO public.variants (id, value, question_id) VALUES (11, 'Кения', 3);
+        INSERT INTO public.variants (id, value, question_id) VALUES (12, 'Египет', 3);
+        INSERT INTO public.variants (id, value, question_id) VALUES (13, 'Алжир', 3);
+        INSERT INTO public.variants (id, value, question_id) VALUES (14, 'Конго', 3);
+        INSERT INTO public.variants (id, value, question_id) VALUES (15, 'эфиопия', 3);
+        INSERT INTO public.variants (id, value, question_id) VALUES (16, 'США', 4);
+        INSERT INTO public.variants (id, value, question_id) VALUES (17, 'Венесуэла', 4);
+        INSERT INTO public.variants (id, value, question_id) VALUES (18, 'Аргентина', 4);
+        INSERT INTO public.variants (id, value, question_id) VALUES (19, 'Бразилия', 4);
+        INSERT INTO public.variants (id, value, question_id) VALUES (20, 'Перу', 4);
+        INSERT INTO public.variants (id, value, question_id) VALUES (21, 'Мексика', 4);

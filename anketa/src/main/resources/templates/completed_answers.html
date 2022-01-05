@@ -5,12 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<form action="#" th:action="@{/user/save_answer}" method="post" th:model="questionnairesForm">
-    <input type="hidden" th:text="${user.getFirstName()}"
-           th:value="${user}"
-           th:field="${user.id}"/>
-    <input type="hidden" th:value="${questionnairesForm.questionnaires.id}" th:field="*{questionnairesForm.questionnaires.id}"
-           th:text="${questionnairesForm.getQuestionnaires().nameQuestionnaire}"/>
+<div th:model="questionnairesForm">
     <input type="hidden" th:value="${questionnairesForm.questionnaires.nameQuestionnaire}" th:field="*{questionnairesForm.questionnaires.nameQuestionnaire}"/>
     <div th:each="answer,answerStat : ${questionnairesForm.getAnswers}">
         <h2 th:text="${answer.question.valueQuestion}"></h2>
@@ -26,7 +21,6 @@
             </li>
         </ul>
     </div>
-    <button type="submit">Complete</button>
-</form>
+</div>
 </body>
 </html>

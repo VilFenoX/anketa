@@ -2,6 +2,7 @@ package com.github.vilfenox.anketa.repository;
 
 import com.github.vilfenox.anketa.Entity.Questionnaires;
 import com.github.vilfenox.anketa.Entity.Questions;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -18,4 +19,8 @@ public interface QuestionsRepository extends CrudRepository<Questions, Long> {
     Optional<Questions> findByValueQuestionAndQuestionnaire_Id(String valueQuestion, Long id);
 
     Iterable<Questions> findByQuestionnaire(Questionnaires questionnaire);
+
+    @Query("SELECT v FROM Questions v JOIN v.variants q " +
+            "WHERE q.id = :qQ")
+    Questions findQuestionByVariantsId(Long qQ);
 }
