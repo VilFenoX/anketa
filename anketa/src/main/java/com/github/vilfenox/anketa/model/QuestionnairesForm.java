@@ -1,7 +1,7 @@
 package com.github.vilfenox.anketa.model;
 
-import com.github.vilfenox.anketa.Entity.Answers;
-import com.github.vilfenox.anketa.Entity.Questionnaires;
+import com.github.vilfenox.anketa.db.Answers;
+import com.github.vilfenox.anketa.db.Questionnaires;
 import lombok.Getter;
 import lombok.Setter;
 

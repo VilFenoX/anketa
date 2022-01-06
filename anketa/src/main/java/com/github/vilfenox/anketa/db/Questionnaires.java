@@ -1,4 +1,4 @@
-package com.github.vilfenox.anketa.Entity;
+package com.github.vilfenox.anketa.db;
 
 import lombok.*;
 

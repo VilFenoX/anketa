@@ -1,6 +1,6 @@
 package com.github.vilfenox.anketa.repository;
 
-import com.github.vilfenox.anketa.Entity.User;
+import com.github.vilfenox.anketa.db.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

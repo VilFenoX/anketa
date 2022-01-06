@@ -1,13 +1,11 @@
 package com.github.vilfenox.anketa.repository;
 
-import com.github.vilfenox.anketa.Entity.Questionnaires;
-import com.github.vilfenox.anketa.Entity.Questions;
+import com.github.vilfenox.anketa.db.Questionnaires;
+import com.github.vilfenox.anketa.db.Questions;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Stack;
 
 public interface QuestionsRepository extends CrudRepository<Questions, Long> {
 

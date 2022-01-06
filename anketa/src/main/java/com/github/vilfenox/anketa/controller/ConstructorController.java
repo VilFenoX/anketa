@@ -1,9 +1,9 @@
 package com.github.vilfenox.anketa.controller;
 
 
-import com.github.vilfenox.anketa.Entity.Questionnaires;
-import com.github.vilfenox.anketa.Entity.Questions;
-import com.github.vilfenox.anketa.Entity.Variants;
+import com.github.vilfenox.anketa.db.Questionnaires;
+import com.github.vilfenox.anketa.db.Questions;
+import com.github.vilfenox.anketa.db.Variants;
 import com.github.vilfenox.anketa.repository.QuestionnairesRepository;
 import com.github.vilfenox.anketa.repository.QuestionsRepository;
 import com.github.vilfenox.anketa.repository.VariantsRepository;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller

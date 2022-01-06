@@ -1,12 +1,10 @@
-package com.github.vilfenox.anketa.Entity;
+package com.github.vilfenox.anketa.db;
 
 import com.github.vilfenox.anketa.model.Role;
 import com.github.vilfenox.anketa.model.Status;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Setter
 @Getter
