@@ -1,7 +1,7 @@
 package com.github.vilfenox.anketa.controller;
 
 
-import com.github.vilfenox.anketa.Entity.*;
+import com.github.vilfenox.anketa.db.*;
 import com.github.vilfenox.anketa.model.QuestionnairesForm;
 import com.github.vilfenox.anketa.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;

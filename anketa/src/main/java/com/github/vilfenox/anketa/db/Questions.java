@@ -1,4 +1,4 @@
-package com.github.vilfenox.anketa.Entity;
+package com.github.vilfenox.anketa.db;
 
 import com.github.vilfenox.anketa.model.Choice;
 import lombok.*;

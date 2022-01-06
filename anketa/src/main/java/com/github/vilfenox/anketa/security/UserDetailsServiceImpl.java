@@ -1,6 +1,6 @@
 package com.github.vilfenox.anketa.security;
 
-import com.github.vilfenox.anketa.Entity.User;
+import com.github.vilfenox.anketa.db.User;
 import com.github.vilfenox.anketa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

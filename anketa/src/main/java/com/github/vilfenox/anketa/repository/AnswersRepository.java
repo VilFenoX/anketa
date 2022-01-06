@@ -1,8 +1,8 @@
 package com.github.vilfenox.anketa.repository;
 
-import com.github.vilfenox.anketa.Entity.Answers;
-import com.github.vilfenox.anketa.Entity.Questions;
-import com.github.vilfenox.anketa.Entity.User;
+import com.github.vilfenox.anketa.db.Answers;
+import com.github.vilfenox.anketa.db.Questions;
+import com.github.vilfenox.anketa.db.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
