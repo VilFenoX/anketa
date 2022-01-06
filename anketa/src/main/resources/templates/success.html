@@ -6,23 +6,20 @@
 <div class="container">
     <h1>Congrats!!! You did it! Select a questionnaire </h1>
 
+    <div sec:authorize="hasAuthority('developers:edit')">
     <form action="/api" method="GET">
         <button type="submit">Create and List Questionnaires</button>
     </form>
-
     <form action="/answers/user_list" method="GET">
         <button type="submit">Watch User`s answers</button>
     </form>
-
-    <h1> For User </h1>
-
+        </div>
     <form action="/user" method="GET">
         <button type="submit">List Questionnaires</button>
     </form>
-
     <form action="/auth/logout" method="POST">
         <button type="submit">Logout</button>
     </form>
-</div>
+    </div>
 </body>
 </html>
